@@ -1,4 +1,4 @@
-# Wi Tchat Project Web School
+# Wi Tchat
 ---
 
 Functional example : [Here](https://benjaminperonne.github.io/Wi-Tchat/)
