@@ -1,0 +1,267 @@
+<!--
+@author Benjamin Peronne
+@email contact@benjaminperonne.fr
+@create date 2021-02-09 10:59:36
+@modify date 2021-02-09 10:59:36
+@desc [wi-tchat]
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- BootSrap -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+        <!-- BootSrap -->
+
+        <!-- Material Icon-->
+        <link
+            href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css"
+            rel="stylesheet"
+        />
+        <!-- Material Icon-->
+
+        <!-- Material Icon From Google -->
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <!-- Material Icon From Google -->
+
+        <!-- <link rel="stylesheet" href="/src/css/style.css" /> -->
+        <link rel="stylesheet" href="../css/style.css" />
+
+        <link
+            rel="shortcut icon"
+            href="../images/favicon.ico"
+            type="image/x-icon"
+        />
+
+        <title>Wi-Tchat</title>
+    </head>
+    <body onload="getId()">
+        <!-- Header -->
+        <header class="container-fluid navBarSuppAdd">
+            <div
+                class="col navbar navbar-expand navbar-dark"
+                id="navbarSupportedContent"
+            >
+                <a href="./chat.html" class="navbar-brand">Wi-Tchat</a>
+                <ul class="navbar-nav">
+                    <li
+                        class="nav-item nav-justified text-center"
+                        id="username"
+                    >
+                        <!-- <h5 class="nav-link username">Benjamin Peronne</h5>                        
+                        <p class="mail">aymerick-971@hotmail.fr</p> -->
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <!-- Header -->
+
+        <!-- Main Container -->
+        <main class="container-fluid">
+            <div class="row">
+                <div class="col-4 containerInsideContainer">
+                    <div class="mt-2 px-1 leftContainerSearch">
+                        <!-- <input
+                            class="w-100 searchInput text-white form-control-sm"
+                            type="text"
+                            placeholder="Search.."
+                            id="getMailFriend"
+                        /> -->
+                        <div class="inner-addon left-addon">
+                            <a
+                                onclick="addFriend('null')"
+                                href="#"
+                                class="glyphicon glyphicon-user"
+                                id="sendMail"
+                            >
+                                <span class="material-icons"> send </span>
+                            </a>
+                            <input
+                                type="text"
+                                class="form-control-sm w-100 px-5 searchInput text-white"
+                                id="getMailFriend"
+                                placeholder="Enter friend name"
+                            />
+                        </div>
+                    </div>
+                    <div class="line mt-2"></div>
+                    <div class="containerContact mt-0">
+                        <div class="contactList pt-1" id="friendList"></div>
+                    </div>
+                </div>
+
+                <div class="col containerInsideContainer" id="rightContainer">
+                    <div class="friendNamePanel">
+                        <div class="">
+                            <p class="pt-3 px-5">'Friend Name'</p>
+                        </div>
+                    </div>
+
+                    <div class="discussionPanel">
+                        <div class="d-flex flex-row m-lg-3">
+                            <div
+                                id="discussions"
+                                class="sender mt-1 clearfix px-2 mx-3"
+                            >
+                                <p class="text-white">
+                                    Lorem ipsum... Excepteur et ex exercitation
+                                    laboris ex sit voluptate quis commodo. Magna
+                                    est ipsum cillum ex aliqua esse eiusmod nisi
+                                    velit labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit ea.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                                <p class="text-white">
+                                    Lorem ipsum...Excepteur et ex exercitation
+                                    laboris ex sit voluptate quis commodo. Magna
+                                    est ipsum cillum ex aliqua esse eiusmod nisi
+                                    velit labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit
+                                    ea.Excepteur et ex exercitation laboris ex
+                                    sit voluptate quis commodo. Magna est ipsum
+                                    cillum ex aliqua esse eiusmod nisi velit
+                                    labore. Tempor et in qui sunt sit ea.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- TEST -->
+                        <div class="d-flex flex-row m-lg-3">
+                            <div class="sender mt-1 clearfix px-2 mx-3">
+                                <p class="text-white">Lorem ipsum...</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                                <p class="text-white">
+                                    Do consectetur duis minim fugiat sit elit
+                                    duis aliqua.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row m-lg-3">
+                            <div class="sender mt-1 clearfix px-2 mx-3">
+                                <p class="text-white">Lorem ipsum...</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                                <p class="text-white">
+                                    Do consectetur duis minim fugiat sit elit
+                                    duis aliqua.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row m-lg-3">
+                            <div class="sender mt-1 clearfix px-2 mx-3">
+                                <p class="text-white">Lorem ipsum...</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                                <p class="text-white">
+                                    Do consectetur duis minim fugiat sit elit
+                                    duis aliqua.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row m-lg-3">
+                            <div class="sender mt-1 clearfix px-2 mx-3">
+                                <p class="text-white">Lorem ipsum...</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                                <p class="text-white">
+                                    Do consectetur duis minim fugiat sit elit
+                                    duis aliqua.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- TEST -->
+                    </div>
+                    <div class="row">
+                        <div class="pb-1 mt-2 col-11">
+                            <input
+                                type="text"
+                                class="w-100 elementInput form-control-lg text-white"
+                                placeholder="Type some message"
+                                id="writeToInput"
+                                autocomplete="off"
+                            />
+                        </div>
+                        <div class="col-1 mt-2">
+                            <a href="#" onclick="sendMessage()">
+                                <span
+                                    class="material-icons icon text-white pt-0 pt-2"
+                                >
+                                    send
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- js -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+            integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+            integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+        <script src="../../main.js"></script>
+        <!-- js -->
+    </body>
+</html>
