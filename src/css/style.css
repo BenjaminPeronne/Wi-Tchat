@@ -53,7 +53,9 @@ a:hover {
 
 /* ------------------------------------- */
 /* ------------- class Part ------------*/
-
+.pointer {
+    cursor: pointer;
+}
 .textFormat_1 {
     color: var(--cyan);
     outline: none;
@@ -80,10 +82,15 @@ a:hover {
     /* border-radius: 1em; */
 }
 .friendNamePanel {
+    display: flex;
+    
     background-color: rgb(39, 42, 45);
     color: white;
     max-height: 20%;
     height: 4em;
+}
+.adjust {
+    padding-top: 1.3em;
 }
 .discussionPanel {
     background-color: #343a40;
@@ -212,12 +219,18 @@ a:hover {
     justify-content: space-between;
 }
 
+.globalFriendList:hover {
+    background-color: #343a40;
+}
+
 /* .friendNameLeft {
     
 }
 .iconRemoveFriendRight {
     
 } */
+
+
 
 /* ------------------------------------- */
 

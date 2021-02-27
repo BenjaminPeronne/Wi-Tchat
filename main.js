@@ -14,7 +14,7 @@ const xhr = new XMLHttpRequest();
 //  --------------------
 
 let hiddenChat = document.querySelector('#rightContainer');
-// hiddenChat.setAttribute('style', 'visibility : hidden');
+hiddenChat.setAttribute('style', 'visibility : hidden');
 
 const signUp = () => {
     // Prevent reloading the page
@@ -170,7 +170,7 @@ const getFriends = (id_user) => {
                         const newElement_a = document.createElement('a');
                         const newElement_line = document.createElement('div');
                         const newElement_span = document.createElement('span');
-                        
+
                         let element = document.querySelector('#friendList');
 
                         element.appendChild(newElement_div);
@@ -179,29 +179,50 @@ const getFriends = (id_user) => {
                         newElement_div.classList.add('px-5');
                         newElement_div.classList.add('pt-1');
                         newElement_div.classList.add('globalFriendList');
+                        newElement_div.classList.add('pointer');
+                        newElement_div.setAttribute(
+                            'id',
+                            response.relations[i].identite
+                        );
+                        newElement_div.setAttribute(
+                            'onclick',
+                            'showClickedPannel(this.id)'
+                        );
 
                         // Left ---------------------------------------------------
                         newElement_div.appendChild(newElement_div_left);
                         newElement_div_left.classList.add('friendNameLeft');
 
-                        newElement_div_left.appendChild(newElement_p).innerText = response.relations[i].identite;
+                        newElement_div_left.appendChild(
+                            newElement_p
+                        ).innerText = response.relations[i].identite;
                         newElement_p.classList.add('text-white');
-                        newElement_p.classList.add('pt-2');       
-                        newElement_p.setAttribute('id', response.relations[i].relation);                 
+                        newElement_p.classList.add('pt-2');
+                        newElement_p.setAttribute(
+                            'id',
+                            response.relations[i].relation
+                        );
                         // Left ---------------------------------------------------
 
                         // Right ---------------------------------------------------
                         newElement_div.appendChild(newElement_div_right);
-                        newElement_div_right.classList.add('iconRemoveFriendRight');
-                        
+                        newElement_div_right.classList.add(
+                            'iconRemoveFriendRight'
+                        );
+
                         newElement_div_right.appendChild(newElement_a);
-                        newElement_a.setAttribute('href', '#');
-                        newElement_a.setAttribute('id', response.relations[i].relation);
-                        newElement_a.setAttribute('onclick', "removeFriend(this.id)");
+                        newElement_a.setAttribute(
+                            'id',
+                            response.relations[i].relation
+                        );
+                        newElement_a.setAttribute(
+                            'onclick',
+                            'removeFriend(this.id)'
+                        );
+                        newElement_a.classList.add('pointer');
 
-
-
-                        newElement_a.appendChild(newElement_span).innerText = 'delete_forever';
+                        newElement_a.appendChild(newElement_span).innerText =
+                            'delete_forever';
                         newElement_span.classList.add('material-icons');
                         newElement_span.classList.add('text-white');
                         newElement_span.classList.add('left-add');
@@ -245,13 +266,10 @@ const keyAction = () => {
 keyAction();
 
 const addFriend = (returnEmail) => {
-    let idUser,
-        emailValue;
+    let idUser, emailValue;
     idUser = localStorage.getItem('id');
     emailValue = returnEmail;
     emailValue = document.querySelector('#getMailFriend').value;
-
-    
 
     xhr.onreadystatechange = function () {
         try {
@@ -284,13 +302,13 @@ const removeFriend = (id_relation) => {
 
     console.log('id of user ' + idUser);
     console.log('id of relation ' + id_relation);
-    
+
     xhr.onreadystatechange = function () {
         try {
             if (this.readyState == 4 && this.status == 200) {
                 let response = JSON.parse(this.responseText);
                 console.log(response);
-                if(id_relation != null) {
+                if (id_relation != null) {
                     alert(response.etat.message);
                     location.reload();
                 }
@@ -301,14 +319,25 @@ const removeFriend = (id_relation) => {
     };
     xhr.open(
         'GET',
-        API +
-            '?delier&identifiant=' +
-            idUser +
-            '&relation=' +
-            id_relation,
+        API + '?delier&identifiant=' + idUser + '&relation=' + id_relation,
         true
     );
     xhr.send(null);
 
     return false;
+};
+
+const showClickedPannel = (name) => {
+    hiddenChat.setAttribute('style', 'visibility : visible');
+
+    let nameOfFriend;
+    nameOfFriend = name;
+
+    console.log('name of friend ' + nameOfFriend);
+
+    let friendName = document.querySelector('#friendName_').innerHTML = nameOfFriend;
+};
+
+const closePannel = () => {
+    hiddenChat.setAttribute('style', 'visibility : hidden');
 };

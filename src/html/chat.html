@@ -82,8 +82,7 @@
                         <div class="inner-addon left-addon">
                             <a
                                 onclick="addFriend('null')"
-                                href="#"
-                                class="glyphicon glyphicon-user"
+                                class="glyphicon glyphicon-user pointer"
                                 id="sendMail"
                             >
                                 <span class="material-icons"> send </span>
@@ -98,14 +97,21 @@
                     </div>
                     <div class="line mt-2"></div>
                     <div class="containerContact mt-0">
-                        <div class="contactList pt-1" id="friendList"></div>
+                        <div class="contactList" id="friendList"></div>
                     </div>
                 </div>
 
                 <div class="col containerInsideContainer" id="rightContainer">
-                    <div class="friendNamePanel">
-                        <div class="">
-                            <p class="pt-3 px-5">'Friend Name'</p>
+                    <div class="friendNamePanel" id="info_">
+                        <div class="px-3 adjust">
+                            <a class="pointer" onclick="closePannel()">
+                                <span class="material-icons text-white">
+                                    close
+                                </span>
+                            </a>
+                        </div>
+                        <div class="px-5 adjust">
+                            <p class="" id="friendName_">'Friend Name'</p>
                         </div>
                     </div>
 
@@ -170,58 +176,7 @@
                             </div>
                         </div>
                         <!-- TEST -->
-                        <div class="d-flex flex-row m-lg-3">
-                            <div class="sender mt-1 clearfix px-2 mx-3">
-                                <p class="text-white">Lorem ipsum...</p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row-reverse m-lg-3">
-                            <div class="receiver mt-2 clearfix px-2 mx-3">
-                                <p class="text-white">
-                                    Do consectetur duis minim fugiat sit elit
-                                    duis aliqua.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row m-lg-3">
-                            <div class="sender mt-1 clearfix px-2 mx-3">
-                                <p class="text-white">Lorem ipsum...</p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row-reverse m-lg-3">
-                            <div class="receiver mt-2 clearfix px-2 mx-3">
-                                <p class="text-white">
-                                    Do consectetur duis minim fugiat sit elit
-                                    duis aliqua.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row m-lg-3">
-                            <div class="sender mt-1 clearfix px-2 mx-3">
-                                <p class="text-white">Lorem ipsum...</p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row-reverse m-lg-3">
-                            <div class="receiver mt-2 clearfix px-2 mx-3">
-                                <p class="text-white">
-                                    Do consectetur duis minim fugiat sit elit
-                                    duis aliqua.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row m-lg-3">
-                            <div class="sender mt-1 clearfix px-2 mx-3">
-                                <p class="text-white">Lorem ipsum...</p>
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row-reverse m-lg-3">
-                            <div class="receiver mt-2 clearfix px-2 mx-3">
-                                <p class="text-white">
-                                    Do consectetur duis minim fugiat sit elit
-                                    duis aliqua.
-                                </p>
-                            </div>
-                        </div>
+
                         <!-- TEST -->
                     </div>
                     <div class="row">
@@ -260,6 +215,8 @@
             crossorigin="anonymous"
         ></script>
         <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 
         <script src="../../main.js"></script>
         <!-- js -->
