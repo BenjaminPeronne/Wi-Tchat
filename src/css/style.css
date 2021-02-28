@@ -117,16 +117,16 @@ a:hover {
     background-color: rgb(39, 42, 45);
     border: none;
 }
-.sender {
-    /* position: relative; */
+.receiver {
+    position: relative;
     border: 1px solid;
     background-color: rgb(39, 42, 45);
     border-radius: 0.4em;
 }
 
-.sender:after {
+.receiver:after {
     content: '';
-    /* position: absolute; */
+    position: absolute;
     left: 0;
     top: 75%;
     width: 0;
@@ -137,16 +137,16 @@ a:hover {
     margin-top: -29px;
     margin-left: -18px;
 }
-.receiver {
-    /* position: relative; */
+.sender {
+    position: relative;
     border: 1px solid;
     background-color: rgb(39, 42, 45);
     border-radius: 0.4em;
 }
 
-.receiver:after {
+.sender:after {
     content: '';
-    /* position: absolute; */
+    position: absolute;
     right: 0;
     top: 75%;
     width: 0;

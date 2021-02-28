@@ -11,10 +11,9 @@
 const API = 'https://trankillprojets.fr/wal/wal.php';
 const xhr = new XMLHttpRequest();
 
-//  --------------------
-
 let hiddenChat = document.querySelector('#rightContainer');
-hiddenChat.setAttribute('style', 'visibility : hidden');
+
+//  --------------------
 
 const signUp = () => {
     // Prevent reloading the page
@@ -114,6 +113,7 @@ const getId = () => {
                 element.appendChild(newElement_2).innerText = response.mail;
                 newElement_2.classList.add('mail');
                 getFriends(idUser);
+                hiddenChat.setAttribute('style', 'visibility : hidden');
             }
         } catch (error) {
             console.error('Error ' + this.status);
@@ -182,7 +182,7 @@ const getFriends = (id_user) => {
                         newElement_div.classList.add('pointer');
                         newElement_div.setAttribute(
                             'id',
-                            response.relations[i].identite
+                            response.relations[i].relation
                         );
                         newElement_div.setAttribute(
                             'onclick',
@@ -328,16 +328,181 @@ const removeFriend = (id_relation) => {
 };
 
 const showClickedPannel = (name) => {
+    let idUser;
+
+    idUser = localStorage.getItem('id');
+
     hiddenChat.setAttribute('style', 'visibility : visible');
 
     let nameOfFriend;
     nameOfFriend = name;
 
-    console.log('name of friend ' + nameOfFriend);
+    xhr.onreadystatechange = function () {
+        try {
+            if (this.readyState == 4 && this.status == 200) {
+                let response = JSON.parse(this.responseText);
+                console.log('name of friend ' + nameOfFriend);
+                document.querySelector('.friendName_').innerHTML = nameOfFriend;
+                for (let i = 0; i < response.relations.length; i++) {
+                    if (response.relations[i].relation == nameOfFriend) {
+                        document.querySelector('.friendName_').innerHTML =
+                            response.relations[i].identite;
+                        showMessage(response.relations[i].relation);
+                        
+                        localStorage.setItem('idRelation', response.relations[i].relation);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('An error has occurred');
+        }
+    };
 
-    let friendName = document.querySelector('#friendName_').innerHTML = nameOfFriend;
+    xhr.open(
+        'GET',
+        API + '?relations&identifiant=' + encodeURIComponent(idUser),
+        true
+    );
+    xhr.send(null);
+
+    return false;
 };
 
 const closePannel = () => {
     hiddenChat.setAttribute('style', 'visibility : hidden');
 };
+
+const showMessage = (id) => {
+    let idUser, id_relation;
+
+    // id_relation = localStorage.getItem('idRelation');
+    // console.log('id relation from localStorage ' + id_relation);
+    // console.log('id relation from parameter ' + idRelation);
+
+    idUser = localStorage.getItem('id');
+
+    let chatPannel = document.querySelector('#discussionPanel_');
+
+    xhr.onreadystatechange = function () {
+        try {
+            if (this.readyState == 4 && this.status) {
+                let response = JSON.parse(this.responseText);
+                console.log(response);
+
+                for (let i = 0; i < response.messages.length; i++) {
+                    console.log(response.messages[i].message);
+
+                    // right bull discussion - receiver --------------
+                    const rightDivElement = document.createElement('div');
+                    chatPannel.appendChild(rightDivElement);
+                    rightDivElement.className = 'd-flex flex-row m-lg-3';
+
+                    const rightBullMessage_div = document.createElement('div');
+                    rightDivElement.appendChild(rightBullMessage_div);
+                    rightBullMessage_div.className =
+                        'receiver mt-1 clearfix px-2 mx-3';
+
+                    const rightBullMessage_p = document.createElement('p');
+                    rightBullMessage_div.appendChild(
+                        rightBullMessage_p
+                    ).innerText = response.messages[i].message;
+                    rightBullMessage_p.className = 'text-white pt-3';
+                    // right bull discussion - receiver -------------
+                }
+            }
+        } catch (error) {
+            console.error('An error has occurred');
+        }
+    };
+
+    xhr.open(
+        'GET',
+        API +
+            '?lire&identifiant=' +
+            encodeURIComponent(idUser) +
+            '&relation=' +
+            encodeURIComponent(id),
+        true
+    );
+
+    xhr.send(null);
+
+    return false;
+};
+
+const sendMessage = () => {
+    let idUser, idRelation;
+
+    idUser = localStorage.getItem('id');
+
+    idRelation = localStorage.getItem('idRelation');
+
+    console.log('id relation from send message ' + idRelation);
+
+    let chatPannel = document.querySelector('#discussionPanel_');
+    let inputValue = document.querySelector('#writeToInput').value;
+
+    xhr.onreadystatechange = function () {
+        try {
+            if (this.readyState == 4 && this.status) {
+                let response = JSON.parse(this.responseText);
+                console.log(response);
+                if (inputValue.length > 0) {
+                    document.querySelector('#writeToInput').value = '';
+                }
+
+                // left bull discussion - sender --------------
+                const leftDivElement = document.createElement('div');
+                chatPannel.appendChild(leftDivElement);
+                leftDivElement.className = 'd-flex flex-row-reverse m-lg-3';
+
+                const leftBullMessage_div = document.createElement('div');
+                leftDivElement.appendChild(leftBullMessage_div);
+                leftBullMessage_div.className =
+                    'sender mt-2 clearfix px-2 mx-3';
+
+                const leftBullMessage_p = document.createElement('p');
+                leftBullMessage_div.appendChild(
+                    leftBullMessage_p
+                ).innerText = inputValue;
+                leftBullMessage_p.className = 'text-white pt-3';
+                // left bull discussion - sender --------------
+            }
+        } catch (error) {
+            console.error('An error has occurred');
+        }
+    };
+
+    xhr.open(
+        'GET',
+        API +
+            '?ecrire&identifiant=' +
+            encodeURIComponent(idUser) +
+            '&relation=' +
+            encodeURIComponent(idRelation) +
+            '&message=' +
+            encodeURIComponent(inputValue),
+        true
+    );
+
+    xhr.send(null);
+
+    return false;
+};
+
+const keyActionToSend = () => {
+    let input = document.querySelector('#writeToInput');
+
+    input.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+            let inputValue = document.querySelector('#writeToInput').value;
+            event.preventDefault();
+            sendMessage(inputValue);
+            // window.setInterval(function () {
+            //     var elem = document.querySelector('#discussionPanel_');
+            //     elem.scrollTop = elem.scrollHeight;
+            // }, 1000);
+        }
+    });
+};
+keyActionToSend();

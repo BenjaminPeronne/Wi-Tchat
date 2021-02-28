@@ -102,6 +102,7 @@
                 </div>
 
                 <div class="col containerInsideContainer" id="rightContainer">
+                    <!-- Friend Name Pannel ------------------ -->
                     <div class="friendNamePanel" id="info_">
                         <div class="px-3 adjust">
                             <a class="pointer" onclick="closePannel()">
@@ -111,15 +112,17 @@
                             </a>
                         </div>
                         <div class="px-5 adjust">
-                            <p class="" id="friendName_">'Friend Name'</p>
+                            <p class="friendName_"></p>
                         </div>
                     </div>
+                    <!-- Friend Name Pannel ------------------ -->
 
-                    <div class="discussionPanel">
-                        <div class="d-flex flex-row m-lg-3">
+                    <!-- discussion Pannel ------------------- -->
+                    <div class="discussionPanel" id="discussionPanel_">
+                        <!-- <div class="d-flex flex-row m-lg-3">
                             <div
                                 id="discussions"
-                                class="sender mt-1 clearfix px-2 mx-3"
+                                class="receiver mt-1 clearfix px-2 mx-3"
                             >
                                 <p class="text-white">
                                     Lorem ipsum... Excepteur et ex exercitation
@@ -140,9 +143,9 @@
                                     labore. Tempor et in qui sunt sit ea.
                                 </p>
                             </div>
-                        </div>
-                        <div class="d-flex flex-row-reverse m-lg-3">
-                            <div class="receiver mt-2 clearfix px-2 mx-3">
+                        </div> -->
+                        <!-- <div class="d-flex flex-row-reverse m-lg-3">
+                            <div class="sender mt-2 clearfix px-2 mx-3">
                                 <p class="text-white">
                                     Lorem ipsum...Excepteur et ex exercitation
                                     laboris ex sit voluptate quis commodo. Magna
@@ -174,7 +177,7 @@
                                     labore. Tempor et in qui sunt sit ea.
                                 </p>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- TEST -->
 
                         <!-- TEST -->
@@ -187,10 +190,15 @@
                                 placeholder="Type some message"
                                 id="writeToInput"
                                 autocomplete="off"
+                                onfocus="this.value='' "
                             />
                         </div>
                         <div class="col-1 mt-2">
-                            <a href="#" onclick="sendMessage()">
+                            <a
+                                class="pointer"
+                                id="sendMsg"
+                                onclick="sendMessage()"
+                            >
                                 <span
                                     class="material-icons icon text-white pt-0 pt-2"
                                 >
