@@ -49,6 +49,11 @@ a:hover {
         font-size: 1.2em;
     }
 }
+@media screen and (max-height: 1115px) {
+    .discussionPanel {
+        height: 45.5em !important;
+    }
+}
 /* ------------------------------------- */
 
 /* ------------------------------------- */
