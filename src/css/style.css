@@ -81,6 +81,10 @@ a:hover {
     background-color: #343a40;
     /* border-radius: 1em; */
 }
+.flexNav {
+    display: flex;
+    justify-content: space-between;
+}
 .friendNamePanel {
     display: flex;
     
@@ -229,7 +233,10 @@ a:hover {
 .iconRemoveFriendRight {
     
 } */
-
+.logoutIcon {
+    
+    
+}
 
 
 /* ------------------------------------- */

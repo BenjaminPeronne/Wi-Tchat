@@ -15,6 +15,37 @@ let hiddenChat = document.querySelector('#rightContainer');
 
 //  --------------------
 
+console.log('Empty ? ' + getCookie('idOfUser'));
+
+const logOut = () => {
+    document.location.href = '../../index.html  ';
+    document.cookie =
+        'idOfUser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+};
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+    var expires = 'expires=' + d.toUTCString();
+    document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
+}
+
+function getCookie(cname) {
+    var name = cname + '=';
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return '';
+}
+
 const signUp = () => {
     // Prevent reloading the page
     document.querySelector('#signup').addEventListener('submit', function (e) {
@@ -56,9 +87,11 @@ const signUp = () => {
 const connection = () => {
     let id_user = document.querySelector('#userName').value;
 
-    localStorage.setItem('id', id_user);
+    setCookie('idOfUser', id_user, 360);
+    console.log('Try to save into a cookie :' + getCookie('idOfUser'));
+    // localStorage.setItem('id', id_user);
 
-    console.log('Inside connection function ' + localStorage.getItem('id'));
+    // console.log('Inside connection function ' + localStorage.getItem('id'));
 
     // Prevent reloading the page
     document.querySelector('#login').addEventListener('submit', function (e) {
@@ -82,7 +115,9 @@ const connection = () => {
 
         xhr.open(
             'GET',
-            API + '?relations&identifiant=' + encodeURIComponent(id_user),
+            API +
+                '?relations&identifiant=' +
+                encodeURIComponent(getCookie('idOfUser')),
             true
         );
         xhr.send(null);
@@ -92,11 +127,11 @@ const connection = () => {
 };
 
 const getId = () => {
-    let idUser;
+    // let idUser;
 
-    idUser = localStorage.getItem('id');
+    // idUser = localStorage.getItem('id');
 
-    console.log('Inside getId function' + idUser);
+    console.log('Inside getId function' + getCookie('idOfUser'));
 
     xhr.onreadystatechange = function () {
         try {
@@ -112,7 +147,7 @@ const getId = () => {
                 newElement_1.classList.add('username');
                 element.appendChild(newElement_2).innerText = response.mail;
                 newElement_2.classList.add('mail');
-                getFriends(idUser);
+                getFriends(getCookie('idOfUser'));
                 hiddenChat.setAttribute('style', 'visibility : hidden');
             }
         } catch (error) {
@@ -123,7 +158,9 @@ const getId = () => {
 
     xhr.open(
         'GET',
-        API + '?information&identifiant=' + encodeURIComponent(idUser),
+        API +
+            '?information&identifiant=' +
+            encodeURIComponent(getCookie('idOfUser')),
         true
     );
     xhr.send(null);
@@ -184,10 +221,6 @@ const getFriends = (id_user) => {
                             'id',
                             response.relations[i].relation
                         );
-                        newElement_div.setAttribute(
-                            'onclick',
-                            'showClickedPannel(this.id)'
-                        );
 
                         // Left ---------------------------------------------------
                         newElement_div.appendChild(newElement_div_left);
@@ -201,6 +234,10 @@ const getFriends = (id_user) => {
                         newElement_p.setAttribute(
                             'id',
                             response.relations[i].relation
+                        );
+                        newElement_p.setAttribute(
+                            'onclick',
+                            'showClickedPannel(this.id)'
                         );
                         // Left ---------------------------------------------------
 
@@ -266,8 +303,9 @@ const keyAction = () => {
 keyAction();
 
 const addFriend = (returnEmail) => {
-    let idUser, emailValue;
-    idUser = localStorage.getItem('id');
+    // let idUser, emailValue;
+    // idUser = localStorage.getItem('id');
+
     emailValue = returnEmail;
     emailValue = document.querySelector('#getMailFriend').value;
 
@@ -287,7 +325,7 @@ const addFriend = (returnEmail) => {
         'GET',
         API +
             '?lier&identifiant=' +
-            encodeURIComponent(idUser) +
+            encodeURIComponent(getCookie('idOfUser')) +
             '&mail=' +
             encodeURIComponent(emailValue),
         true
@@ -298,9 +336,9 @@ const addFriend = (returnEmail) => {
 };
 
 const removeFriend = (id_relation) => {
-    let idUser = localStorage.getItem('id');
+    // let idUser = localStorage.getItem('id');
 
-    console.log('id of user ' + idUser);
+    console.log('id of user ' + getCookie('idOfUser'));
     console.log('id of relation ' + id_relation);
 
     xhr.onreadystatechange = function () {
@@ -319,7 +357,11 @@ const removeFriend = (id_relation) => {
     };
     xhr.open(
         'GET',
-        API + '?delier&identifiant=' + idUser + '&relation=' + id_relation,
+        API +
+            '?delier&identifiant=' +
+            getCookie('idOfUser') +
+            '&relation=' +
+            id_relation,
         true
     );
     xhr.send(null);
@@ -328,9 +370,9 @@ const removeFriend = (id_relation) => {
 };
 
 const showClickedPannel = (name) => {
-    let idUser;
+    // let idUser;
 
-    idUser = localStorage.getItem('id');
+    // idUser = localStorage.getItem('id');
 
     hiddenChat.setAttribute('style', 'visibility : visible');
 
@@ -348,8 +390,17 @@ const showClickedPannel = (name) => {
                         document.querySelector('.friendName_').innerHTML =
                             response.relations[i].identite;
                         showMessage(response.relations[i].relation);
-                        
-                        localStorage.setItem('idRelation', response.relations[i].relation);
+
+                        // localStorage.setItem(
+                        //     'idRelation',
+                        //     response.relations[i].relation
+                        // );
+
+                        setCookie(
+                            'idOfRelation',
+                            response.relations[i].relation,
+                            360
+                        );
                     }
                 }
             }
@@ -360,7 +411,9 @@ const showClickedPannel = (name) => {
 
     xhr.open(
         'GET',
-        API + '?relations&identifiant=' + encodeURIComponent(idUser),
+        API +
+            '?relations&identifiant=' +
+            encodeURIComponent(getCookie('idOfUser')),
         true
     );
     xhr.send(null);
@@ -370,16 +423,17 @@ const showClickedPannel = (name) => {
 
 const closePannel = () => {
     hiddenChat.setAttribute('style', 'visibility : hidden');
+    $("#discussion").empty();
 };
 
 const showMessage = (id) => {
-    let idUser, id_relation;
+    // let idUser, id_relation;
 
     // id_relation = localStorage.getItem('idRelation');
     // console.log('id relation from localStorage ' + id_relation);
     // console.log('id relation from parameter ' + idRelation);
 
-    idUser = localStorage.getItem('id');
+    // idUser = localStorage.getItem('id');
 
     let chatPannel = document.querySelector('#discussionPanel_');
 
@@ -419,10 +473,10 @@ const showMessage = (id) => {
         'GET',
         API +
             '?lire&identifiant=' +
-            encodeURIComponent(idUser) +
+            encodeURIComponent(getCookie('idOfUser')) +
             '&relation=' +
             encodeURIComponent(id),
-        true
+        false
     );
 
     xhr.send(null);
@@ -433,11 +487,11 @@ const showMessage = (id) => {
 const sendMessage = () => {
     let idUser, idRelation;
 
-    idUser = localStorage.getItem('id');
+    // idUser = localStorage.getItem('id');
 
-    idRelation = localStorage.getItem('idRelation');
+    // idRelation = localStorage.getItem('idRelation');
 
-    console.log('id relation from send message ' + idRelation);
+    console.log('id relation from send message ' + getCookie('idOfRelation'));
 
     let chatPannel = document.querySelector('#discussionPanel_');
     let inputValue = document.querySelector('#writeToInput').value;
@@ -450,7 +504,6 @@ const sendMessage = () => {
                 if (inputValue.length > 0) {
                     document.querySelector('#writeToInput').value = '';
                 }
-
                 // left bull discussion - sender --------------
                 const leftDivElement = document.createElement('div');
                 chatPannel.appendChild(leftDivElement);
@@ -477,9 +530,9 @@ const sendMessage = () => {
         'GET',
         API +
             '?ecrire&identifiant=' +
-            encodeURIComponent(idUser) +
+            encodeURIComponent(getCookie('idOfUser')) +
             '&relation=' +
-            encodeURIComponent(idRelation) +
+            encodeURIComponent(getCookie('idOfRelation')) +
             '&message=' +
             encodeURIComponent(inputValue),
         true
