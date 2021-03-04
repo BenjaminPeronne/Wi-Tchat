@@ -391,7 +391,7 @@ const showClickedPannel = (name) => {
                         document.querySelector('.friendName_').innerHTML =
                             response.relations[i].identite;
                         showMessage(response.relations[i].relation);
-                        if (window.matchMedia("(max-width: 414px)").matches) {
+                        if (window.matchMedia("(max-width: 500px)").matches) {
                             hiddenContact.hidden = true;
                             hiddenChat.hidden = false;
 
@@ -439,7 +439,7 @@ const showClickedPannel = (name) => {
 const closePannel = () => {
     hiddenChat.setAttribute('style', 'visibility : hidden');
     $("#discussion").empty();
-    if (window.matchMedia("(max-width: 414px)").matches) {
+    if (window.matchMedia("(max-width: 500px)").matches) {
         hiddenContact.hidden = false;
         hiddenChat.hidden = true;
     }
