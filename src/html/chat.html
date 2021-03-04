@@ -76,7 +76,7 @@
         <!-- Main Container -->
         <main class="container-fluid">
             <div class="row">
-                <div class="col-4 containerInsideContainer">
+                <div class="col-4 containerInsideContainer" id="leftContainer_">
                     <div class="mt-2 px-1 leftContainerSearch">
                         <!-- <input
                             class="w-100 searchInput text-white form-control-sm"
@@ -188,7 +188,7 @@
                         <!-- TEST -->
                     </div>
                     <div class="row">
-                        <div class="pb-1 mt-2 col-11">
+                        <div class="pb-1 mt-2 col-11" id="inputLabel">
                             <input
                                 type="text"
                                 class="w-100 elementInput form-control-lg text-white"
@@ -198,7 +198,7 @@
                                 onfocus="this.value='' "
                             />
                         </div>
-                        <div class="col-1 mt-2">
+                        <div class="send_div col-1 mt-2" id="send_">
                             <a
                                 class="pointer"
                                 id="sendMsg"
@@ -206,6 +206,7 @@
                             >
                                 <span
                                     class="material-icons icon text-white pt-0 pt-2"
+                                    id="icon_send"
                                 >
                                     send
                                 </span>

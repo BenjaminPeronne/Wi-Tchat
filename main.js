@@ -12,6 +12,7 @@ const API = 'https://trankillprojets.fr/wal/wal.php';
 const xhr = new XMLHttpRequest();
 
 let hiddenChat = document.querySelector('#rightContainer');
+let hiddenContact = document.querySelector('#leftContainer_');
 
 //  --------------------
 
@@ -390,6 +391,20 @@ const showClickedPannel = (name) => {
                         document.querySelector('.friendName_').innerHTML =
                             response.relations[i].identite;
                         showMessage(response.relations[i].relation);
+                        if (window.matchMedia("(max-width: 414px)").matches) {
+                            hiddenContact.hidden = true;
+                            hiddenChat.hidden = false;
+
+                            let inputLabel = document.querySelector('#inputLabel');
+                            let send_ = document.querySelector('#send_');
+                            console.log('Resize at height');
+                            inputLabel.classList.remove('col-11');
+                            send_.classList.remove('col-1');
+
+                            inputLabel.classList.add('col-9');
+                            send_.classList.add('col-1');
+                        }
+
 
                         // localStorage.setItem(
                         //     'idRelation',
@@ -424,6 +439,11 @@ const showClickedPannel = (name) => {
 const closePannel = () => {
     hiddenChat.setAttribute('style', 'visibility : hidden');
     $("#discussion").empty();
+    if (window.matchMedia("(max-width: 414px)").matches) {
+        hiddenContact.hidden = false;
+        hiddenChat.hidden = true;
+    }
+
 };
 
 const showMessage = (id) => {
@@ -555,6 +575,7 @@ const keyActionToSend = () => {
             //     var elem = document.querySelector('#discussionPanel_');
             //     elem.scrollTop = elem.scrollHeight;
             // }, 1000);
+
         }
     });
 };

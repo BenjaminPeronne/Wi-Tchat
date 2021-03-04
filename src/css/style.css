@@ -26,10 +26,22 @@ a:hover {
 }
 /* ------------------------------------- */
 /* ---------- Responsive Part ----------*/
+@media screen and (max-height: 736px) {
+    .discussionPanel {
+        height: 25em !important;
+    }
+}
+
 @media screen and (max-width: 414px) {
     /* .line {
         width: 36.18% !important;
     } */
+    /* #rightContainer {
+        visibility: collapse !important;
+    } */
+    .containerInsideContainer:nth-child(1){
+        width : 100% !important;
+    }
 }
 @media screen and (max-width: 470px) {
     .footer {
@@ -48,10 +60,19 @@ a:hover {
     .responsive_title {
         font-size: 1.2em;
     }
+    .discussionPanel {
+        height: 22em !important;
+    }
 }
+/* @media screen and (max-height: 820px) {
+    .discussionPanel {
+        height: 36em ;
+    }
+} */
+
 @media screen and (max-height: 1115px) {
     .discussionPanel {
-        height: 45em !important;
+        height: 36em !important ;
     }
 }
 /* ------------------------------------- */
@@ -104,15 +125,14 @@ a:hover {
 .discussionPanel {
     background-color: #343a40;
     width: 100%;
-    height: 48em;
+    height: 35.5em;
     overflow-y: scroll;
-    overscroll-behavior-y: smooth;
 }
 .containerInsideContainer:nth-child(1) {
     display: flex;
     flex-direction: column;
 }
-.containerInsideContainer:nth-child(2) {
+.containerInsideContainer:nth-child(2) { /*  Right Side*/
     display: flex;
     flex-direction: column;
 }
@@ -183,7 +203,7 @@ a:hover {
 }
 .containerContact {
     overflow-y: scroll;
-    height: 85%;
+    max-height: 40em;
 }
 .icon {
     font-size: 34px;
