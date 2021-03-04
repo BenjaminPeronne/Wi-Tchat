@@ -439,7 +439,7 @@ const showClickedPannel = (name) => {
 const closePannel = () => {
     hiddenChat.setAttribute('style', 'visibility : hidden');
     $("#discussion").empty();
-    if (window.matchMedia("(max-width: 500px)").matches) {
+    if (window.matchMedia("(max-width: 414px)").matches) {
         hiddenContact.hidden = false;
         hiddenChat.hidden = true;
     }

@@ -28,7 +28,7 @@ a:hover {
 /* ---------- Responsive Part ----------*/
 @media screen and (max-height: 736px) {
     .discussionPanel {
-        height: 25.5em !important;
+        height: 25em !important;
     }
 }
 
@@ -70,11 +70,11 @@ a:hover {
     }
 } */
 
-@media screen and (max-height: 1115px) {
+/* @media screen and (max-height: 1115px) {
     .discussionPanel {
         height: 36em ;
     }
-}
+} */
 /* ------------------------------------- */
 
 /* ------------------------------------- */
