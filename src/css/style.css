@@ -120,7 +120,7 @@ a:hover {
 .discussionPanel {
     background-color: #343a40;
     width: 100%;
-    min-height: 12em;
+    min-height: 5em;
     max-height: 40em;
     height: 36.5em;
     overflow-y: scroll;
