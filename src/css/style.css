@@ -63,8 +63,9 @@ a:hover {
 
 @media screen and (max-height: 736px) {
     .discussionPanel {
-        height: 16em !important;
+        height: 13em !important;
     }
+    
 }
 
 @media screen and (max-height: 820px) {
