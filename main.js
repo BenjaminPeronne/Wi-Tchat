@@ -11,12 +11,18 @@
 const API = 'https://trankillprojets.fr/wal/wal.php';
 const xhr = new XMLHttpRequest();
 
+let user = { id: 0, name: "", mail: "", relations: [] };
+user.id = getCookie('idOfUser');
+user.name = getCookie('identite');
+user.mail = getCookie('mail');
+user.relations = getCookie('idOfRelation');
+
 let hiddenChat = document.querySelector('#rightContainer');
 let hiddenContact = document.querySelector('#leftContainer_');
 
 //  --------------------
 
-console.log('Empty ? ' + getCookie('idOfUser'));
+console.log(user);
 
 const logOut = () => {
     document.location.href = '../../index.html  ';
@@ -90,10 +96,6 @@ const connection = () => {
 
     setCookie('idOfUser', id_user, 360);
     console.log('Try to save into a cookie :' + getCookie('idOfUser'));
-    // localStorage.setItem('id', id_user);
-
-    // console.log('Inside connection function ' + localStorage.getItem('id'));
-
     // Prevent reloading the page
     document.querySelector('#login').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -104,9 +106,8 @@ const connection = () => {
         xhr.onreadystatechange = function () {
             try {
                 if (this.readyState == 4 && this.status == 200) {
-                    let response = JSON.parse(this.responseText);
-                    console.log(response);
-                    console.log(response.relations);
+                    let response = JSON.parse(this.responseText);                    
+                    console.log(response);                    
                     document.location.href = './src/html/chat.html';
                 }
             } catch (error) {
@@ -117,7 +118,7 @@ const connection = () => {
         xhr.open(
             'GET',
             API +
-                '?relations&identifiant=' +
+                '?activation=' +
                 encodeURIComponent(getCookie('idOfUser')),
             true
         );
@@ -127,11 +128,7 @@ const connection = () => {
     });
 };
 
-const getId = () => {
-    // let idUser;
-
-    // idUser = localStorage.getItem('id');
-
+const getInformation = () => {
     console.log('Inside getId function' + getCookie('idOfUser'));
 
     xhr.onreadystatechange = function () {
@@ -149,6 +146,8 @@ const getId = () => {
                 element.appendChild(newElement_2).innerText = response.mail;
                 newElement_2.classList.add('mail');
                 getFriends(getCookie('idOfUser'));
+                setCookie('identite', response.identite, 360);
+                setCookie('mail', response.mail, 360);
                 hiddenChat.setAttribute('style', 'visibility : hidden');
             }
         } catch (error) {
@@ -170,11 +169,13 @@ const getId = () => {
 };
 
 const getFriends = (id_user) => {
+
     xhr.onreadystatechange = function () {
         try {
             if (this.readyState == 4 && this.status == 200) {
                 let response = JSON.parse(this.responseText);
                 console.log(response.relations);
+                console.log(user);
 
                 let containerRight = document.querySelector('#rightContainer');
                 containerRight.hidden = false;
@@ -196,7 +197,13 @@ const getFriends = (id_user) => {
                     newElement_p.classList.add('text-white');
                     newElement_p.classList.add('pt-2');
                 } else {
-                    for (let i = 0; i < response.relations.length; i++) {
+                    // for (let i = 0; i < response.relations.length; i++) {
+                    for (let i in response.relations) {
+                        if (!user.relations[response.relations[i].relation]) {
+                            // document.cookie =
+                            // 'idOfRelation=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                            showMessage(user.relations);
+                        }
                         const newElement_div = document.createElement('div');
                         const newElement_div_left = document.createElement(
                             'div'
@@ -371,10 +378,6 @@ const removeFriend = (id_relation) => {
 };
 
 const showClickedPannel = (name) => {
-    // let idUser;
-
-    // idUser = localStorage.getItem('id');
-
     hiddenChat.setAttribute('style', 'visibility : visible');
 
     let nameOfFriend;
@@ -446,43 +449,44 @@ const closePannel = () => {
 
 };
 
-const showMessage = (id) => {
-    // let idUser, id_relation;
-
-    // id_relation = localStorage.getItem('idRelation');
-    // console.log('id relation from localStorage ' + id_relation);
-    // console.log('id relation from parameter ' + idRelation);
-
-    // idUser = localStorage.getItem('id');
-
+const createMessageToShow = (responseMessage) => {
     let chatPannel = document.querySelector('#discussionPanel_');
 
+    // right bull discussion - receiver --------------
+    const rightDivElement = document.createElement('div');
+    chatPannel.appendChild(rightDivElement);
+    rightDivElement.className = 'd-flex flex-row m-lg-3';
+
+    const rightBullMessage_div = document.createElement('div');
+    rightDivElement.appendChild(rightBullMessage_div);
+    rightBullMessage_div.className =
+        'receiver mt-1 clearfix px-2 mx-3';
+
+    const rightBullMessage_p = document.createElement('p');
+    rightBullMessage_div.appendChild(
+        rightBullMessage_p
+    ).innerText = responseMessage;
+    rightBullMessage_p.className = 'text-white pt-3';
+    // right bull discussion - receiver -------------
+}
+
+const showMessage = (id) => {
     xhr.onreadystatechange = function () {
         try {
-            if (this.readyState == 4 && this.status) {
+            if (this.readyState == 4 && this.status == 200) {
                 let response = JSON.parse(this.responseText);
                 console.log(response);
 
+                // for (let i of response.messages) {
+                //     console.log(response.messages[i].message);
+                //     createMessageToShow(response.messages[i].message);
+                // }
+               
                 for (let i = 0; i < response.messages.length; i++) {
                     console.log(response.messages[i].message);
-
-                    // right bull discussion - receiver --------------
-                    const rightDivElement = document.createElement('div');
-                    chatPannel.appendChild(rightDivElement);
-                    rightDivElement.className = 'd-flex flex-row m-lg-3';
-
-                    const rightBullMessage_div = document.createElement('div');
-                    rightDivElement.appendChild(rightBullMessage_div);
-                    rightBullMessage_div.className =
-                        'receiver mt-1 clearfix px-2 mx-3';
-
-                    const rightBullMessage_p = document.createElement('p');
-                    rightBullMessage_div.appendChild(
-                        rightBullMessage_p
-                    ).innerText = response.messages[i].message;
-                    rightBullMessage_p.className = 'text-white pt-3';
-                    // right bull discussion - receiver -------------
+                    createMessageToShow(response.messages[i].message);
                 }
+                showMessage(id);
             }
         } catch (error) {
             console.error('An error has occurred');
@@ -496,7 +500,7 @@ const showMessage = (id) => {
             encodeURIComponent(getCookie('idOfUser')) +
             '&relation=' +
             encodeURIComponent(id),
-        false
+        true
     );
 
     xhr.send(null);
@@ -504,42 +508,41 @@ const showMessage = (id) => {
     return false;
 };
 
+const createMessageToSend = (text) => {
+    let chatPannel = document.querySelector('#discussionPanel_');
+
+    // left bull discussion - sender --------------
+    const leftDivElement = document.createElement('div');
+    chatPannel.appendChild(leftDivElement);
+    leftDivElement.className = 'd-flex flex-row-reverse m-lg-3';
+
+    const leftBullMessage_div = document.createElement('div');
+    leftDivElement.appendChild(leftBullMessage_div);
+    leftBullMessage_div.className =
+        'sender mt-2 clearfix px-2 mx-3';
+
+    const leftBullMessage_p = document.createElement('p');
+    leftBullMessage_div.appendChild(
+        leftBullMessage_p
+    ).innerText = text;
+    leftBullMessage_p.className = 'text-white pt-3';
+    // left bull discussion - sender --------------
+}
+
 const sendMessage = () => {
-    let idUser, idRelation;
-
-    // idUser = localStorage.getItem('id');
-
-    // idRelation = localStorage.getItem('idRelation');
-
     console.log('id relation from send message ' + getCookie('idOfRelation'));
 
-    let chatPannel = document.querySelector('#discussionPanel_');
     let inputValue = document.querySelector('#writeToInput').value;
-
+    
     xhr.onreadystatechange = function () {
         try {
-            if (this.readyState == 4 && this.status) {
+            if (this.readyState == 4 && this.status == 200) {
                 let response = JSON.parse(this.responseText);
                 console.log(response);
                 if (inputValue.length > 0) {
                     document.querySelector('#writeToInput').value = '';
                 }
-                // left bull discussion - sender --------------
-                const leftDivElement = document.createElement('div');
-                chatPannel.appendChild(leftDivElement);
-                leftDivElement.className = 'd-flex flex-row-reverse m-lg-3';
-
-                const leftBullMessage_div = document.createElement('div');
-                leftDivElement.appendChild(leftBullMessage_div);
-                leftBullMessage_div.className =
-                    'sender mt-2 clearfix px-2 mx-3';
-
-                const leftBullMessage_p = document.createElement('p');
-                leftBullMessage_div.appendChild(
-                    leftBullMessage_p
-                ).innerText = inputValue;
-                leftBullMessage_p.className = 'text-white pt-3';
-                // left bull discussion - sender --------------
+                createMessageToSend(inputValue);                
             }
         } catch (error) {
             console.error('An error has occurred');
